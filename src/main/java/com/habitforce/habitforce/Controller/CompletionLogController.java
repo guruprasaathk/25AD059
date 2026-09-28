@@ -20,7 +20,6 @@ public class CompletionLogController {
         this.completionLogService = completionLogService;
     }
 
-    // ADD COMPLETION
     @PostMapping("/{habitId}/completion")
     public CompletionLogResponse addCompletion(
             @PathVariable Long habitId,
@@ -30,7 +29,6 @@ public class CompletionLogController {
                 .addCompletion(habitId, request);
     }
 
-    // GET COMPLETION HISTORY
     @GetMapping("/{habitId}/completion")
     public List<CompletionLogResponse> getCompletions(
             @PathVariable Long habitId) {

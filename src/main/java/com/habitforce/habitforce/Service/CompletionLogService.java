@@ -25,7 +25,6 @@ public class CompletionLogService {
         this.habitRepository = habitRepository;
     }
 
-    // CREATE COMPLETION LOG
     public CompletionLogResponse addCompletion(
             Long habitId,
             CompletionLogRequest request) {
@@ -62,7 +61,6 @@ public class CompletionLogService {
         return convertToResponse(savedLog);
     }
 
-    // GET ALL COMPLETION LOGS FOR A HABIT
     public List<CompletionLogResponse> getCompletions(
             Long habitId) {
 
@@ -73,7 +71,6 @@ public class CompletionLogService {
                 .toList();
     }
 
-    // CONVERT ENTITY TO DTO
     private CompletionLogResponse convertToResponse(
             CompletionLog log) {
 

@@ -55,19 +55,16 @@ public class StreakService {
                     logs.get(0).getCompletionDate();
         }
 
-        // Find existing streak
         Streak streak = streakRepository
                 .findByHabitId(habitId)
                 .orElse(new Streak());
 
-        // Set streak values
-        streak.setHabit(habit);
+         streak.setHabit(habit);
         streak.setCurrentStreak(currentStreak);
         streak.setBestStreak(bestStreak);
         streak.setLastCompletedDate(lastCompletedDate);
 
-        // SAVE INTO DATABASE
-        streakRepository.save(streak);
+         streakRepository.save(streak);
 
         return new StreakResponse(
                 habitId,

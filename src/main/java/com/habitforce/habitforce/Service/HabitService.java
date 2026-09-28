@@ -18,7 +18,6 @@ public class HabitService {
         this.habitRepository = habitRepository;
     }
 
-    // CREATE
     public HabitResponse createHabit(HabitRequest request) {
 
         Habit habit = new Habit();
@@ -32,7 +31,6 @@ public class HabitService {
         return convertToResponse(savedHabit);
     }
 
-    // GET ALL
     public List<HabitResponse> getAllHabits() {
 
         return habitRepository.findAll()
@@ -41,7 +39,6 @@ public class HabitService {
                 .toList();
     }
 
-    // GET BY ID
     public HabitResponse getHabitById(Long id) {
 
         Habit habit = habitRepository
@@ -55,7 +52,6 @@ public class HabitService {
         return convertToResponse(habit);
     }
 
-    // UPDATE
     public HabitResponse updateHabit(
             Long id,
             HabitRequest request) {
@@ -77,13 +73,11 @@ public class HabitService {
         return convertToResponse(updatedHabit);
     }
 
-    // DELETE
     public void deleteHabit(Long id) {
 
         habitRepository.deleteById(id);
     }
 
-    // CONVERT ENTITY → DTO
     private HabitResponse convertToResponse(Habit habit) {
 
         return new HabitResponse(
