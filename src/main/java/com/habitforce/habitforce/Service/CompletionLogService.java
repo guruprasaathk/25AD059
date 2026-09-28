@@ -39,7 +39,7 @@ public class CompletionLogService {
 
         boolean alreadyExists =
                 completionLogRepository
-                        .existsByHabitIdAndCompletionDate(
+                        .existsByHabit_IdAndCompletionDate(
                                 habitId,
                                 request.getCompletionDate());
 
@@ -65,7 +65,7 @@ public class CompletionLogService {
             Long habitId) {
 
         return completionLogRepository
-                .findByHabitIdOrderByCompletionDateDesc(habitId)
+                .findByHabit_IdOrderByCompletionDateDesc(habitId)
                 .stream()
                 .map(this::convertToResponse)
                 .toList();

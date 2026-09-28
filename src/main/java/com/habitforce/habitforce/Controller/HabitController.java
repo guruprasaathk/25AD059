@@ -18,6 +18,7 @@ public class HabitController {
         this.habitService = habitService;
     }
 
+    // CREATE HABIT
     @PostMapping
     public HabitResponse createHabit(
             @RequestBody HabitRequest request) {
@@ -25,12 +26,16 @@ public class HabitController {
         return habitService.createHabit(request);
     }
 
+    // GET ALL HABITS
     @GetMapping
     public List<HabitResponse> getAllHabits() {
 
-        return habitService.getAllHabits();
+        return habitService
+                .getAllHabits(0, 100, "id")
+                .getContent();
     }
 
+    // GET HABIT BY ID
     @GetMapping("/{id}")
     public HabitResponse getHabitById(
             @PathVariable Long id) {
@@ -38,6 +43,7 @@ public class HabitController {
         return habitService.getHabitById(id);
     }
 
+    // UPDATE HABIT
     @PutMapping("/{id}")
     public HabitResponse updateHabit(
             @PathVariable Long id,
@@ -47,8 +53,7 @@ public class HabitController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteHabit(
-            @PathVariable Long id) {
+    public String deleteHabit(@PathVariable Long id) {
 
         habitService.deleteHabit(id);
 

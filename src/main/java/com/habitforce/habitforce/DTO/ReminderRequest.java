@@ -5,9 +5,7 @@ import java.time.LocalTime;
 public class ReminderRequest {
 
     private Long habitId;
-
     private LocalTime reminderTime;
-
     private boolean enabled;
 
     public Long getHabitId() {

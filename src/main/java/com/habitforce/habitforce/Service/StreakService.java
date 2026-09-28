@@ -42,7 +42,7 @@ public class StreakService {
 
         List<CompletionLog> logs =
                 completionLogRepository
-                        .findByHabitIdOrderByCompletionDateDesc(habitId);
+                        .findByHabit_IdOrderByCompletionDateDesc(habitId);
 
         int currentStreak = calculateCurrentStreak(logs);
 
@@ -56,7 +56,7 @@ public class StreakService {
         }
 
         Streak streak = streakRepository
-                .findByHabitId(habitId)
+                .findByHabit_Id(habitId)
                 .orElse(new Streak());
 
          streak.setHabit(habit);

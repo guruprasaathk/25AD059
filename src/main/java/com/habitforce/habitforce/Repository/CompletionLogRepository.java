@@ -9,10 +9,16 @@ import java.util.List;
 public interface CompletionLogRepository
         extends JpaRepository<CompletionLog, Long> {
 
-    List<CompletionLog> findByHabitIdOrderByCompletionDateDesc(
-            Long habitId);
-
-    boolean existsByHabitIdAndCompletionDate(
+    boolean existsByHabit_IdAndCompletionDate(
             Long habitId,
-            LocalDate completionDate);
+            LocalDate completionDate
+    );
+
+    List<CompletionLog> findByHabit_IdOrderByCompletionDateDesc(
+            Long habitId
+    );
+
+    List<CompletionLog> findByHabit_Id(Long habitId);
+
+    void deleteByHabit_Id(Long habitId);
 }

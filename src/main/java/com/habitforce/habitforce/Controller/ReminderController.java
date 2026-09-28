@@ -1,51 +1,57 @@
 package com.habitforce.habitforce.Controller;
 
 import com.habitforce.habitforce.DTO.ReminderRequest;
-import com.habitforce.habitforce.DTO.ReminderResponse;
+import com.habitforce.habitforce.Entity.Reminder;
 import com.habitforce.habitforce.Service.ReminderService;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reminders")
+@CrossOrigin
 public class ReminderController {
 
     private final ReminderService reminderService;
 
-    public ReminderController(
-            ReminderService reminderService) {
-
+    public ReminderController(ReminderService reminderService) {
         this.reminderService = reminderService;
     }
 
     @PostMapping
-    public ReminderResponse createReminder(
+    public Reminder createReminder(
             @RequestBody ReminderRequest request) {
 
         return reminderService.createReminder(request);
     }
 
-    @GetMapping("/habit/{habitId}")
-    public ReminderResponse getReminder(
-            @PathVariable Long habitId) {
+    @GetMapping
+    public List<Reminder> getAllReminders() {
 
-        return reminderService.getReminder(habitId);
+        return reminderService.getAllReminders();
     }
 
-    @PutMapping("/habit/{habitId}")
-    public ReminderResponse updateReminder(
-            @PathVariable Long habitId,
+    @GetMapping("/{id}")
+    public Reminder getReminderById(
+            @PathVariable Long id) {
+
+        return reminderService.getReminderById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Reminder updateReminder(
+            @PathVariable Long id,
             @RequestBody ReminderRequest request) {
 
-        return reminderService.updateReminder(
-                habitId, request);
+        return reminderService.updateReminder(id, request);
     }
 
-    @DeleteMapping("/habit/{habitId}")
+    @DeleteMapping("/{id}")
     public String deleteReminder(
-            @PathVariable Long habitId) {
+            @PathVariable Long id) {
 
-        reminderService.deleteReminder(habitId);
+        reminderService.deleteReminder(id);
 
         return "Reminder deleted successfully";
     }

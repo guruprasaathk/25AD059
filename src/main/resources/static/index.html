@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HabitForce - Habit Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">H</div>
+
+        <div>
+            <h2>HabitForce</h2>
+            <span>Build better habits</span>
+        </div>
+    </div>
+
+    <nav>
+
+        <button class="nav-item active" onclick="showDashboard()">
+            <span>📊</span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" onclick="openAddHabitModal()">
+            <span>➕</span>
+            Add Habit
+        </button>
+
+        <button class="nav-item" onclick="scrollToHabits()">
+            <span>🔥</span>
+            My Habits
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="motivation">
+            <span>💡</span>
+
+            <div>
+                <strong>Stay consistent!</strong>
+                <p>Small steps every day.</p>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-content">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div>
+            <p class="welcome">Welcome back 👋</p>
+            <h1>My Habits</h1>
+            <p class="subtitle">
+                Track your progress and build powerful habits.
+            </p>
+        </div>
+
+        <button class="add-button" onclick="openAddHabitModal()">
+            <span>＋</span>
+            Add Habit
+        </button>
+
+    </header>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                📋
+            </div>
+
+            <div>
+                <span>Total Habits</span>
+                <strong id="totalHabits">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✅
+            </div>
+
+            <div>
+                <span>Completed Today</span>
+                <strong id="completedToday">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                🔥
+            </div>
+
+            <div>
+                <span>Active Streaks</span>
+                <strong id="activeStreaks">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon pink">
+                🏆
+            </div>
+
+            <div>
+                <span>Best Streak</span>
+                <strong id="bestStreak">0 days</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= HABITS ================= -->
+
+    <section class="habits-section" id="habitsSection">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Your Habits</h2>
+                <p>Keep going and maintain your streak.</p>
+            </div>
+
+            <button class="refresh-button" onclick="loadHabits()">
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div id="loading" class="loading">
+            Loading habits...
+        </div>
+
+
+        <div id="habitContainer" class="habit-grid"></div>
+
+
+        <div id="emptyState" class="empty-state hidden">
+
+            <div class="empty-icon">
+                🌱
+            </div>
+
+            <h2>No habits yet</h2>
+
+            <p>
+                Start building your first habit today.
+            </p>
+
+            <button onclick="openAddHabitModal()">
+                + Create Your First Habit
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= ADD HABIT MODAL ================= -->
+
+<div id="habitModal" class="modal">
+
+    <div class="modal-box">
+
+        <button class="close-button" onclick="closeAddHabitModal()">
+            ×
+        </button>
+
+        <div class="modal-heading">
+
+            <div class="modal-icon">
+                🌱
+            </div>
+
+            <div>
+                <h2>Create New Habit</h2>
+                <p>Start a new habit and stay consistent.</p>
+            </div>
+
+        </div>
+
+
+        <form id="habitForm">
+
+            <label>Habit Name</label>
+
+            <input
+                    type="text"
+                    id="habitName"
+                    placeholder="Example: Exercise"
+                    required
+            >
+
+
+            <label>Description</label>
+
+            <textarea
+                    id="habitDescription"
+                    placeholder="Example: 30 minutes exercise"
+                    rows="3"
+            ></textarea>
+
+
+            <label>Frequency</label>
+
+            <select id="habitFrequency">
+
+                <option value="DAILY">
+                    Daily
+                </option>
+
+                <option value="WEEKLY">
+                    Weekly
+                </option>
+
+            </select>
+
+
+            <button
+                    type="submit"
+                    class="primary-button"
+            >
+                Create Habit
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= REMINDER MODAL ================= -->
+
+<div id="reminderModal" class="modal">
+
+    <div class="modal-box reminder-box">
+
+        <button class="close-button" onclick="closeReminderModal()">
+            ×
+        </button>
+
+        <div class="modal-heading">
+
+            <div class="modal-icon reminder-icon">
+                ⏰
+            </div>
+
+            <div>
+                <h2>Set Reminder</h2>
+                <p>Choose when you want to be reminded.</p>
+            </div>
+
+        </div>
+
+
+        <label>Reminder Time</label>
+
+        <input
+                type="time"
+                id="reminderTime"
+                required
+        >
+
+
+        <button
+                class="primary-button"
+                onclick="saveReminder()"
+        >
+            Save Reminder
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast">
+
+    <span id="toastIcon">✓</span>
+
+    <span id="toastMessage">
+        Success
+    </span>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

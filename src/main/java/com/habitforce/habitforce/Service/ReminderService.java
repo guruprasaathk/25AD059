@@ -1,13 +1,14 @@
 package com.habitforce.habitforce.Service;
 
 import com.habitforce.habitforce.DTO.ReminderRequest;
-import com.habitforce.habitforce.DTO.ReminderResponse;
 import com.habitforce.habitforce.Entity.Habit;
 import com.habitforce.habitforce.Entity.Reminder;
 import com.habitforce.habitforce.Repository.HabitRepository;
 import com.habitforce.habitforce.Repository.ReminderRepository;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReminderService {
@@ -23,8 +24,8 @@ public class ReminderService {
         this.habitRepository = habitRepository;
     }
 
-    public ReminderResponse createReminder(
-            ReminderRequest request) {
+    // CREATE REMINDER
+    public Reminder createReminder(ReminderRequest request) {
 
         Habit habit = habitRepository
                 .findById(request.getHabitId())
@@ -37,74 +38,59 @@ public class ReminderService {
         Reminder reminder = new Reminder();
 
         reminder.setHabit(habit);
-        reminder.setReminderTime(
-                request.getReminderTime());
-        reminder.setEnabled(
-                request.isEnabled());
+        reminder.setReminderTime(request.getReminderTime());
+        reminder.setEnabled(request.isEnabled());
 
-        Reminder savedReminder =
-                reminderRepository.save(reminder);
-
-        return convertToResponse(savedReminder);
+        return reminderRepository.save(reminder);
     }
 
-    public ReminderResponse getReminder(
-            Long habitId) {
+    // GET ALL REMINDERS
+    public List<Reminder> getAllReminders() {
 
-        Reminder reminder = reminderRepository
-                .findByHabitId(habitId)
+        return reminderRepository.findAll();
+    }
+
+    // GET REMINDER BY ID
+    public Reminder getReminderById(Long id) {
+
+        return reminderRepository
+                .findById(id)
                 .orElse(null);
-
-        if (reminder == null) {
-            return null;
-        }
-
-        return convertToResponse(reminder);
     }
 
-    public ReminderResponse updateReminder(
-            Long habitId,
+    // UPDATE REMINDER
+    public Reminder updateReminder(
+            Long id,
             ReminderRequest request) {
 
         Reminder reminder = reminderRepository
-                .findByHabitId(habitId)
+                .findById(id)
                 .orElse(null);
 
         if (reminder == null) {
             return null;
         }
 
-        reminder.setReminderTime(
-                request.getReminderTime());
-
-        reminder.setEnabled(
-                request.isEnabled());
-
-        Reminder updatedReminder =
-                reminderRepository.save(reminder);
-
-        return convertToResponse(updatedReminder);
-    }
-
-    public void deleteReminder(Long habitId) {
-
-        Reminder reminder = reminderRepository
-                .findByHabitId(habitId)
+        Habit habit = habitRepository
+                .findById(request.getHabitId())
                 .orElse(null);
 
-        if (reminder != null) {
-            reminderRepository.delete(reminder);
+        if (habit == null) {
+            return null;
         }
+
+        reminder.setHabit(habit);
+        reminder.setReminderTime(request.getReminderTime());
+        reminder.setEnabled(request.isEnabled());
+
+        return reminderRepository.save(reminder);
     }
 
-    private ReminderResponse convertToResponse(
-            Reminder reminder) {
+    // DELETE REMINDER
+    public void deleteReminder(Long id) {
 
-        return new ReminderResponse(
-                reminder.getId(),
-                reminder.getHabit().getId(),
-                reminder.getReminderTime(),
-                reminder.isEnabled()
-        );
+        if (reminderRepository.existsById(id)) {
+            reminderRepository.deleteById(id);
+        }
     }
 }
